@@ -26,11 +26,9 @@ var test_org = {
 
 var util = require('wrms-dash-util');
 
-util.org_data.active().add_org(test_org);
-
 var vendor_org = undefined;
 
-require('config').get('contracts').forEach(c => {
+require('config').get('contracts').concat([test_org]).forEach(c => {
     if (c.org_name === '__vendor'){
         vendor_org = c;
     }
@@ -39,20 +37,40 @@ require('config').get('contracts').forEach(c => {
 
 function clone_pod(a){ return JSON.parse(JSON.stringify(a)) }
 
+function create_dummy_org(overrides){
+    let o = clone_pod(test_org);
+    Object.keys(overrides).forEach(k => {
+        o[k] = overrides[k];
+    });
+    util.org_data.active().add_org(o);
+    return o;
+}
+
+create_dummy_org({
+    org_id: 1,
+    org_name: "Acme Co",
+    name: "Acme Co - SLA 2018-2019",
+    systems: [ 1 ]
+});
+
+create_dummy_org({
+    org_id: 2,
+    org_name: "Bas Co",
+    name: "Bas Co - SLA 2017-2020",
+    systems: [ 2, 3 ]
+});
+
 module.exports = {
     fake_response: fake_response,
     cp: clone_pod,
-    get_test_org: function(){
-        return clone_pod(test_org);
+    get_test_org: (spec) => {
+        if (!spec){
+            return test_org;
+        }
+        let k = Object.keys(spec)[0];
+        return util.org_data.active().get_org_by_key(k, spec[k]);
     },
-    create_dummy_org: function(overrides){
-        let o = clone_pod(test_org);
-        Object.keys(overrides).forEach(k => {
-            o[k] = overrides[k];
-        });
-        util.org_data.active().add_org(o);
-        return o;
-    },
+    create_dummy_org: create_dummy_org,
     make_ctx: function(org){
         org = org || vendor_org;
         return {
