@@ -1,0 +1,14 @@
+{
+  "name": "wrms-dash-test-lib",
+  "version": "1.0.0",
+  "description": "Catalyst EU dashboard unit testing functions",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jlabusch/wrms-dash-test-lib.git"
+  },
+  "author": "Jacques Labuschagne <jlabusch@acm.org>",
+  "license": "GPL-3.0",
+  "dependencies": {
+  }
+}
