@@ -47,17 +47,17 @@ function create_dummy_org(overrides){
 }
 
 create_dummy_org({
-    org_id: 1,
+    org_id: 100,
     org_name: "Acme Co",
     name: "Acme Co - SLA 2018-2019",
-    systems: [ 1 ]
+    systems: [ 101 ]
 });
 
 create_dummy_org({
-    org_id: 2,
+    org_id: 200,
     org_name: "Bas Co",
     name: "Bas Co - SLA 2017-2020",
-    systems: [ 2, 3 ]
+    systems: [ 201, 202 ]
 });
 
 module.exports = {
